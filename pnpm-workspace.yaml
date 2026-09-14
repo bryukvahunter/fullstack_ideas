@@ -1,3 +1,7 @@
 packages:
   - backend
   - webapp
+allowBuilds:
+  "@parcel/watcher": false
+  "@sentry/cli": false
+  core-js: false

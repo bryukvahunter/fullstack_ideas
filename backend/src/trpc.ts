@@ -1,41 +1,36 @@
 import { initTRPC } from "@trpc/server";
+import _ from "lodash";
+import { z } from "zod";
 
-const ideas = [
-  {
-    nick: "cool-idea-1",
-    title: "idea 1",
-    description: "Описание идеи...",
-  },
-  {
-    nick: "cool-idea-2",
-    title: "idea 2",
-    description: "Описание идеи...",
-  },
-  {
-    nick: "cool-idea-3",
-    title: "idea 3",
-    description: "Описание идеи...",
-  },
-  {
-    nick: "cool-idea-4",
-    title: "idea 4",
-    description: "Описание идеи...",
-  },
-  {
-    nick: "cool-idea-5",
-    title: "idea 5",
-    description: "Описание идеи...",
-  },
-];
+const ideas = _.times(100, (i) => ({
+  nick: `cool-idea-${i}`,
+  name: `idea ${i}`,
+  description: `Описание идеи... №${i}`,
+  text: _.times(100, (j) => `<p>Text paragraph ${j} of idea ${i}...</p>`).join(
+    "",
+  ),
+}));
 
 const trpc = initTRPC.create();
 
-const x: number = "Y";
-
 export const trpcRouter = trpc.router({
   getIdeas: trpc.procedure.query(() => {
-    return { ideas };
+    return {
+      ideas: ideas.map((idea) => _.pick(idea, ["nick", "name", "description"])),
+    };
   }),
+
+  getIdea: trpc.procedure
+    .input(
+      z.object({
+        ideaNick: z.string(),
+      }),
+    )
+    .query(({ input }) => {
+      const idea = ideas.find((idea) => idea.nick === input.ideaNick);
+
+      return { idea: idea || null };
+    }),
 });
 
 export type TrpcRouter = typeof trpcRouter;
