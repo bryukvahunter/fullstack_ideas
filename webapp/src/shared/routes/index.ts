@@ -3,6 +3,7 @@ import { getRouteParams } from "./utils";
 export const routes = {
   getAllIdeas: () => "/",
   getViewIdea: ({ ideaNick }: { ideaNick: string }) => `/ideas/${ideaNick}`,
+  getNewIdea: () => "/ideas/new",
 };
 
 export const ROUTE_NAME = {

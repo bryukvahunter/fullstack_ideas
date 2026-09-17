@@ -13,6 +13,12 @@ export function Layout() {
               All ideas
             </Link>
           </li>
+
+          <li className={styles.item}>
+            <Link className={styles.link} to={routes.getNewIdea()}>
+              Add idea
+            </Link>
+          </li>
         </ul>
       </div>
 
