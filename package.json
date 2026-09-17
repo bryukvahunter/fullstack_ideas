@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "scripts": {
     "b": "pnpm  --filter @fullstack/backend",
-    "f": "pnpm  --filter @fullstack/webapp",
+    "w": "pnpm  --filter @fullstack/webapp",
     "types": "concurrently 'pnpm b types' 'pnpm f types'",
     "dev": "pnpm -r --parallel dev",
     "prepare": "husky install"

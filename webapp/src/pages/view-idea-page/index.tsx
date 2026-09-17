@@ -2,6 +2,7 @@ import { trpc } from "@/lib/create-trpc";
 import { useRequireParams } from "@/shared/helpers";
 import { ROUTE_NAME } from "@/shared/routes";
 import styles from "./index.module.scss";
+import { Segment } from "@/widgets/segment";
 
 export function ViewIdeaPage() {
   const ideaNick = useRequireParams(ROUTE_NAME.IDEA_NICK);
@@ -25,13 +26,11 @@ export function ViewIdeaPage() {
   if (!data.idea) return <div>idea not found...</div>;
 
   return (
-    <div>
-      <h2 className={styles.title}>{data.idea.name}</h2>
-      <p className={styles.description}>{data.idea.description}</p>
+    <Segment title={data.idea.name} description={data.idea.description}>
       <div
         className={styles.text}
         dangerouslySetInnerHTML={{ __html: data.idea.text }}
       />
-    </div>
+    </Segment>
   );
 }
