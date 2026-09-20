@@ -1,24 +1,19 @@
 // console.log("ебать я фулстак");
-import express from "express";
-import * as trpcExpress from "@trpc/server/adapters/express";
-import { trpcRouter } from "./trpc";
-import cors from "cors";
+import express from 'express'
+import cors from 'cors'
+import { trpcRouter } from './router'
+import { applyTrpcTpExpressApp } from './lib'
 
-const expressApp = express();
+const expressApp = express()
 
-expressApp.use(cors());
+expressApp.use(cors())
 
-expressApp.get("/ping", (req, res) => {
-  res.send("pong");
-});
+expressApp.get('/ping', (req, res) => {
+  res.send('pong')
+})
 
-expressApp.use(
-  "/trpc",
-  trpcExpress.createExpressMiddleware({
-    router: trpcRouter,
-  }),
-);
+applyTrpcTpExpressApp(expressApp, trpcRouter)
 
 expressApp.listen(3000, () => {
-  console.info("слушать http://localhost:3000");
-});
+  console.info('слушать http://localhost:3000')
+})
