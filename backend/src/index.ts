@@ -1,8 +1,8 @@
 // console.log("ебать я фулстак");
-import express from 'express'
 import cors from 'cors'
-import { trpcRouter } from './router'
+import express from 'express'
 import { applyTrpcTpExpressApp } from './lib'
+import { trpcRouter } from './router'
 
 const expressApp = express()
 

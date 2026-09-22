@@ -21,10 +21,10 @@ export function CustomInput<T extends FormikValues>({
         type="text"
         value={value}
         onChange={(e) => {
-          formik.setFieldValue(name, e.target.value)
+          void formik.setFieldValue(name, e.target.value)
         }}
         onBlur={() => {
-          formik.setFieldTouched(name)
+          void formik.setFieldTouched(name)
         }}
         name={name}
         id={name}

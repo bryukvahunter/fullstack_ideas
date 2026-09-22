@@ -1,6 +1,6 @@
 import type { TrpcRouter } from '@fullstack/backend/src/router'
-import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
 import { QueryClient } from '@tanstack/react-query'
+import { createTRPCReact, httpBatchLink } from '@trpc/react-query'
 
 export const trpc = createTRPCReact<TrpcRouter>()
 

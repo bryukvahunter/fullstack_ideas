@@ -1,6 +1,6 @@
-import { routes } from "@/shared/routes";
-import { Link, Outlet } from "react-router-dom";
-import styles from "./index.module.scss";
+import { Link, Outlet } from 'react-router-dom'
+import styles from './index.module.scss'
+import { routes } from '@/shared/routes'
 
 export function Layout() {
   return (
@@ -26,5 +26,5 @@ export function Layout() {
         <Outlet />
       </div>
     </div>
-  );
+  )
 }

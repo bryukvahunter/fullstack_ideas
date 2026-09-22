@@ -20,10 +20,10 @@ export function CustomTextarea<T extends FormikValues>({
       <textarea
         value={value}
         onChange={(e) => {
-          formik.setFieldValue(name, e.target.value)
+          void formik.setFieldValue(name, e.target.value)
         }}
         onBlur={() => {
-          formik.setFieldTouched(name)
+          void formik.setFieldTouched(name)
         }}
         name={name}
         id={name}

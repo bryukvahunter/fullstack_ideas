@@ -1,10 +1,10 @@
-import { Segment } from '@/widgets/segment'
-import { CustomInput } from '@/shared/components/input/input'
-import { CustomTextarea } from '@/shared/components/textarea/textarea'
+import { zCreateIdeaTrpcInput } from '@fullstack/backend/src/router/create-idea/input'
 import { useFormik } from 'formik'
 import { withZodSchema } from 'formik-validator-zod'
-import { z } from 'zod'
 import { trpc } from '@/lib/create-trpc'
+import { CustomInput } from '@/shared/components/input/input'
+import { CustomTextarea } from '@/shared/components/textarea/textarea'
+import { Segment } from '@/widgets/segment'
 
 export function NewIdeaPage() {
   const createIdea = trpc.createIdea.useMutation()
@@ -16,20 +16,9 @@ export function NewIdeaPage() {
       description: '',
       text: '',
     },
-    validate: withZodSchema(
-      z.object({
-        name: z.string().min(3).max(15),
-        nick: z
-          .string()
-          .regex(/^[a-z0-9-]+$/, 'Nick may contain only lowercase letters, number and dashes')
-          .min(1)
-          .max(30),
-        description: z.string().min(3).max(50),
-        text: z.string().min(0).max(100, 'The text must contain no more than 100 characters'),
-      })
-    ),
+    validate: withZodSchema(zCreateIdeaTrpcInput),
     onSubmit: async (values) => {
-      return createIdea.mutateAsync(values)
+      return await createIdea.mutateAsync(values)
     },
   })
 

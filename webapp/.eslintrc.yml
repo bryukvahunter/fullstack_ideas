@@ -2,7 +2,7 @@ extends:
   - react-app
   - ../.eslintrc.yml
 parserOptions:
-  project: ./tsconfig.json
+  project: ./tsconfig.app.json
 overrides:
   - files:
       - vite.config.ts
@@ -15,13 +15,13 @@ rules:
         - info
         - error
         - warn
-  "@typescript-eslint/no-restricted-imports":
+  '@typescript-eslint/no-restricted-imports':
     - error
     - patterns:
         - group:
-            - "@ideanick/backend/**"
-            - "!@ideanick/backend/**/"
-            - "!@ideanick/backend/**/input"
-            - "!@ideanick/backend/src/utils/can"
+            - '@fullstack/backend/**'
+            - '!@fullstack/backend/**/'
+            - '!@fullstack/backend/**/input'
+            - '!@fullstack/backend/src/utils/can'
           allowTypeImports: true
-          message: "Only types and input schemas are allowed to be imported from backend workspace"
+          message: 'Only types and input schemas are allowed to be imported from backend workspace'

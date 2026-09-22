@@ -4,17 +4,19 @@ settings:
   import/resolver:
     node:
       extensions:
-        - ".js"
-        - ".ts"
-        - ".tsx"
+        - '.js'
+        - '.ts'
+        - '.tsx'
 rules:
-  no-console: error
+  no-console:
+    - error
+    - allow: [info, error, warn]
   import/no-restricted-paths:
     - error
     - zones:
-        - target: "./src/**/!(*.integration.test.ts)"
-          from: "./src/test"
-          message: "Import something from test dir only inside integration tests"
+        - target: './src/**/!(*.integration.test.ts)'
+          from: './src/test'
+          message: 'Import something from test dir only inside integration tests'
   import/order:
     - error
     - groups:
