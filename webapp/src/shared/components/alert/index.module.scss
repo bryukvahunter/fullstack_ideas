@@ -1,0 +1,17 @@
+@import '../../../styles/vars';
+@import '../../../styles/mixin';
+
+.alert {
+  padding: 10px;
+  border-radius: $borderRadiusSmall;
+
+  &.red {
+    background-color: rgb(237, 119, 119);
+    color: rgb(94, 20, 4);
+  }
+
+  &.green {
+    background-color: rgb(157, 250, 157);
+    color: rgb(28, 61, 0);
+  }
+}

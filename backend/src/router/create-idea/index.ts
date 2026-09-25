@@ -1,10 +1,10 @@
 import { ideas, trpc } from '../../lib'
 import { zCreateIdeaTrpcInput } from './input'
 
-export const someThing = '123'
-
 export const createIdeaTrpcRoute = trpc.procedure.input(zCreateIdeaTrpcInput).mutation(({ input }) => {
+  if (ideas.find((idea) => idea.nick === input.nick)) {
+    throw Error('idea with this nick already exists')
+  }
   ideas.unshift(input)
-
   return true
 })

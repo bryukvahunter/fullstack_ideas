@@ -2,6 +2,9 @@ packages:
   - backend
   - webapp
 allowBuilds:
-  "@parcel/watcher": false
-  "@sentry/cli": false
+  '@parcel/watcher': false
+  '@prisma/client': true
+  '@prisma/engines': true
+  '@sentry/cli': false
   core-js: false
+  prisma: true
