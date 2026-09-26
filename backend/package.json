@@ -3,12 +3,18 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "ts-node-dev --rs --exit-child ./src/index.ts",
+    "dev": "ts-node-dev --watch ./.env --rs --exit-child ./src/index.ts",
     "build": "rimraf ./dist && tsc --build ./tsconfig.json",
     "start": "node ./dist/index.js",
+    "pmd": "prisma migrate dev",
+    "pgc": "prisma generate",
     "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext .ts .",
     "prettify": "prettier --loglevel warn --cache --write '{src/**/*,*}.{ts,tsx,js,json,yml,scss}' '!**/{node_modules,dist}/**/*'",
-    "types": "tsc --noEmit --project ./tsconfig.json"
+    "types": "tsc --noEmit --project ./tsconfig.json",
+    "prepare": "pnpm pgc"
+  },
+  "prisma": {
+    "schema": "./src/prisma/schema.prisma"
   },
   "dependencies": {
     "@trpc/server": "^10.37.1",
