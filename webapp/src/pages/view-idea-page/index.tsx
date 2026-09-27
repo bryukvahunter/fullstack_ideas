@@ -1,3 +1,4 @@
+import format from 'date-fns/format'
 import styles from './index.module.scss'
 import { trpc } from '@/lib/create-trpc'
 import { useRequireParams } from '@/shared/helpers'
@@ -36,6 +37,7 @@ export function ViewIdeaPage() {
 
   return (
     <Segment title={data.idea.name} description={data.idea.description}>
+      <div className={styles.createdAt}>Created AT: {format(new Date(data.idea.createdAt), 'yyyy-MM-dd')}</div>
       <div className={styles.text} dangerouslySetInnerHTML={{ __html: data.idea.text }} />
     </Segment>
   )

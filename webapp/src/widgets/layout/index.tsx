@@ -19,6 +19,12 @@ export function Layout() {
               Add idea
             </Link>
           </li>
+
+          <li className={styles.item}>
+            <Link className={styles.link} to={routes.getSignUp()}>
+              Sign Up
+            </Link>
+          </li>
         </ul>
       </div>
 

@@ -6,11 +6,13 @@ export function CustomInput<T extends FormikValues>({
   name,
   label,
   formik,
+  type = 'text',
   maxWidth,
 }: {
   name: keyof T & string
   label: string
   formik: FormikProps<T>
+  type?: React.HTMLInputTypeAttribute | undefined
   maxWidth?: number
 }) {
   const value = formik.values[name]
@@ -29,7 +31,7 @@ export function CustomInput<T extends FormikValues>({
       <input
         className={cn({ [styles.input]: true, [styles.invalid]: invalid })}
         style={{ maxWidth }}
-        type="text"
+        type={type}
         value={value}
         onChange={(e) => {
           void formik.setFieldValue(name, e.target.value)

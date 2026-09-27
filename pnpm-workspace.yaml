@@ -7,4 +7,5 @@ allowBuilds:
   '@prisma/engines': true
   '@sentry/cli': false
   core-js: false
+  esbuild: true
   prisma: true

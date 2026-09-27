@@ -1,18 +1,19 @@
-import { getRouteParams } from "./utils";
+import { getRouteParams } from './utils'
 
 export const routes = {
-  getAllIdeas: () => "/",
+  getAllIdeas: () => '/',
   getViewIdea: ({ ideaNick }: { ideaNick: string }) => `/ideas/${ideaNick}`,
-  getNewIdea: () => "/ideas/new",
-};
+  getNewIdea: () => '/ideas/new',
+  getSignUp: () => '/sign-up',
+}
 
 export const ROUTE_NAME = {
-  IDEA_NICK: "ideaNick",
-} as const;
+  IDEA_NICK: 'ideaNick',
+} as const
 
 export const viewIdeaRouteParams = getRouteParams({
   ideaNick: `:${ROUTE_NAME.IDEA_NICK}`,
-  xxx: "123",
-});
+  xxx: '123',
+})
 
-export type ViewIdeaRouteParams = typeof viewIdeaRouteParams;
+export type ViewIdeaRouteParams = typeof viewIdeaRouteParams
