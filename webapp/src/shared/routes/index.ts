@@ -5,6 +5,7 @@ export const routes = {
   getViewIdea: ({ ideaNick }: { ideaNick: string }) => `/ideas/${ideaNick}`,
   getNewIdea: () => '/ideas/new',
   getSignUp: () => '/sign-up',
+  getSignIn: () => '/sign-in',
 }
 
 export const ROUTE_NAME = {

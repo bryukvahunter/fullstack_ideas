@@ -4,6 +4,7 @@ import express from 'express'
 import { applyTrpcTpExpressApp } from './lib'
 import type { AppContex } from './lib/ctx'
 import { createAppContext } from './lib/ctx'
+import { applyPassportToExpressApp } from './lib/passport'
 import { trpcRouter } from './router'
 
 void (async () => {
@@ -19,6 +20,8 @@ void (async () => {
     expressApp.get('/ping', (req, res) => {
       res.send('pong')
     })
+
+    applyPassportToExpressApp(expressApp, ctx)
 
     await applyTrpcTpExpressApp(expressApp, ctx, trpcRouter)
 
