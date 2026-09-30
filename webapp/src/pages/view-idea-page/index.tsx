@@ -38,6 +38,9 @@ export function ViewIdeaPage() {
   return (
     <Segment title={data.idea.name} description={data.idea.description}>
       <div className={styles.createdAt}>Created AT: {format(new Date(data.idea.createdAt), 'yyyy-MM-dd')}</div>
+
+      <div className={styles.author}>Author: {data.idea.author.nick}</div>
+
       <div className={styles.text} dangerouslySetInnerHTML={{ __html: data.idea.text }} />
     </Segment>
   )

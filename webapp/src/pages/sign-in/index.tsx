@@ -15,6 +15,8 @@ import { Segment } from '@/widgets/segment'
 export function SignInPage() {
   const navigate = useNavigate()
 
+  const trpcUtils = trpc.useUtils()
+
   const [submittingError, setSubmittingError] = useState<string | null>(null)
 
   const signIn = trpc.signIn.useMutation()
@@ -30,6 +32,7 @@ export function SignInPage() {
 
         const { token } = await signIn.mutateAsync(values)
         Cookie.set('token', token, { expires: 99999 })
+        await trpcUtils.invalidate()
         navigate(routes.getAllIdeas())
       } catch (error) {
         if (error instanceof Error) {

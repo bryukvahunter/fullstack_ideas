@@ -1,0 +1,12 @@
+@import '../../../../styles/mixin';
+@import '../../../../styles/vars';
+
+.item {
+  &:not(:first-child) {
+    margin-top: 5px;
+  }
+
+  .link {
+    @include link;
+  }
+}

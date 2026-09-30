@@ -1,2 +1,1 @@
-export { ideas } from './ideas'
-export { trpc, applyTrpcTpExpressApp } from './trpc'
+export { trpc, applyTrpcToExpressApp } from './trpc'

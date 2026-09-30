@@ -12,6 +12,7 @@ model User {
   nick      String   @unique
   password  String
   createdAt DateTime @default(now()) @db.Timestamptz(3)
+  ideas     Idea[]
 }
 
 model Idea {
@@ -21,4 +22,6 @@ model Idea {
   description String
   text        String
   createdAt   DateTime @default(now()) @db.Timestamptz(3)
+  authorId    String
+  author      User     @relation(fields: [authorId], references: [id])
 }

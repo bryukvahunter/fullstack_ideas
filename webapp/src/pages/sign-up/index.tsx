@@ -16,6 +16,8 @@ import { Segment } from '@/widgets/segment'
 export function SignUpPage() {
   const navigate = useNavigate()
 
+  const trpcUtils = trpc.useUtils()
+
   const [successMessageVisible, setSuccessMessageVisible] = useState(false)
   const [submittingError, setSubmittingError] = useState<string | null>(null)
 
@@ -48,6 +50,7 @@ export function SignUpPage() {
         const { token } = await signUp.mutateAsync(values)
 
         Cookie.set('token', token, { expires: 99999 })
+        await trpcUtils.invalidate()
         navigate(routes.getAllIdeas())
 
         formik.resetForm()

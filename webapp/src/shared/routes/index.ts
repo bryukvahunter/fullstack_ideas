@@ -6,6 +6,7 @@ export const routes = {
   getNewIdea: () => '/ideas/new',
   getSignUp: () => '/sign-up',
   getSignIn: () => '/sign-in',
+  getSignOut: () => '/sign-out',
 }
 
 export const ROUTE_NAME = {

@@ -1,7 +1,8 @@
 // console.log("ебать я фулстак");
+import { env } from './lib/env'
 import cors from 'cors'
 import express from 'express'
-import { applyTrpcTpExpressApp } from './lib'
+import { applyTrpcToExpressApp } from './lib'
 import type { AppContex } from './lib/ctx'
 import { createAppContext } from './lib/ctx'
 import { applyPassportToExpressApp } from './lib/passport'
@@ -23,10 +24,10 @@ void (async () => {
 
     applyPassportToExpressApp(expressApp, ctx)
 
-    await applyTrpcTpExpressApp(expressApp, ctx, trpcRouter)
+    await applyTrpcToExpressApp(expressApp, ctx, trpcRouter)
 
-    expressApp.listen(3000, () => {
-      console.info('слушать http://localhost:3000')
+    expressApp.listen(env.PORT, () => {
+      console.info(`слушать http://localhost:${env.PORT}`)
     })
   } catch (error) {
     console.error(error)

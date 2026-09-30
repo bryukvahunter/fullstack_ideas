@@ -1,7 +1,7 @@
-@import "../../styles/mixin";
-@import "../../styles/vars";
+@import '../../styles/mixin';
+@import '../../styles/vars';
 
-$breakpoint: "<=900px";
+$breakpoint: '<=900px';
 
 .layout {
   display: flex;
@@ -33,17 +33,17 @@ $breakpoint: "<=900px";
       margin-bottom: 15px;
     }
 
-    .menu {
-      .item {
-        &:not(:first-child) {
-          margin-top: 5px;
-        }
+    // .menu {
+    //   .item {
+    //     &:not(:first-child) {
+    //       margin-top: 5px;
+    //     }
 
-        .link {
-          @include link;
-        }
-      }
-    }
+    //     .link {
+    //       @include link;
+    //     }
+    //   }
+    // }
   }
 
   .content {

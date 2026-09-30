@@ -3,6 +3,7 @@ import { TrpcProvider } from './lib/trpc-provider'
 import { AllIdeasPage } from './pages/all-ideas-page'
 import { NewIdeaPage } from './pages/new-idea-page'
 import { SignInPage } from './pages/sign-in'
+import { SignOutPage } from './pages/sign-out'
 import { SignUpPage } from './pages/sign-up'
 import { ViewIdeaPage } from './pages/view-idea-page'
 import { routes, viewIdeaRouteParams } from './shared/routes'
@@ -14,6 +15,8 @@ export function App() {
     <TrpcProvider>
       <BrowserRouter>
         <Routes>
+          <Route path={routes.getSignOut()} element={<SignOutPage />} />
+
           <Route element={<Layout />}>
             <Route path={routes.getAllIdeas()} element={<AllIdeasPage />} />
             <Route path={routes.getViewIdea(viewIdeaRouteParams)} element={<ViewIdeaPage />} />

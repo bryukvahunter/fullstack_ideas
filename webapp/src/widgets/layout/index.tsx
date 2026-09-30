@@ -1,37 +1,13 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import styles from './index.module.scss'
-import { routes } from '@/shared/routes'
+import { LayoutMenu } from './ui/menu'
 
 export function Layout() {
   return (
     <div className={styles.layout}>
       <div className={styles.navigation}>
         <div className={styles.logo}>Idea Nick</div>
-        <ul className={styles.menu}>
-          <li className={styles.item}>
-            <Link className={styles.link} to={routes.getAllIdeas()}>
-              All ideas
-            </Link>
-          </li>
-
-          <li className={styles.item}>
-            <Link className={styles.link} to={routes.getNewIdea()}>
-              Add idea
-            </Link>
-          </li>
-
-          <li className={styles.item}>
-            <Link className={styles.link} to={routes.getSignUp()}>
-              Sign Up
-            </Link>
-          </li>
-
-          <li className={styles.item}>
-            <Link className={styles.link} to={routes.getSignIn()}>
-              Sign In
-            </Link>
-          </li>
-        </ul>
+        <LayoutMenu />
       </div>
 
       <div className={styles.content}>

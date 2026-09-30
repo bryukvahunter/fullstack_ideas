@@ -1,4 +1,4 @@
-import { env } from 'process'
+import { env } from './env'
 import { type Express } from 'express'
 import { Passport } from 'passport'
 import { ExtractJwt, Strategy as JWTStrategy } from 'passport-jwt'
