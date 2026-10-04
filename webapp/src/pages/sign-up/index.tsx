@@ -1,11 +1,9 @@
 import { zSignUpTrpcInput } from '@fullstack/backend/src/router/sign-up/input'
-import { useFormik } from 'formik'
-import { withZodSchema } from 'formik-validator-zod'
 import Cookie from 'js-cookie'
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 import { trpc } from '@/lib/create-trpc'
+import { useForm } from '@/lib/hooks/form'
 import { CustomAlert } from '@/shared/components/alert'
 import { CustomButton } from '@/shared/components/button'
 import { FormItems } from '@/shared/components/form-items'
@@ -18,54 +16,35 @@ export function SignUpPage() {
 
   const trpcUtils = trpc.useUtils()
 
-  const [successMessageVisible, setSuccessMessageVisible] = useState(false)
-  const [submittingError, setSubmittingError] = useState<string | null>(null)
-
   const signUp = trpc.signUp.useMutation()
-  const formik = useFormik({
+  const { formik, alertProps, buttonProps } = useForm({
     initialValues: {
       nick: '',
       password: '',
       passwordAgain: '',
     },
-    validate: withZodSchema(
-      zSignUpTrpcInput
-        .extend({
-          passwordAgain: z.string().min(1),
-        })
-        .superRefine((val, ctx) => {
-          if (val.password !== val.passwordAgain) {
-            ctx.addIssue({
-              code: z.ZodIssueCode.custom,
-              message: 'Password must be the same',
-              path: ['passwordAgain'],
-            })
-          }
-        })
-    ),
-    onSubmit: async (values) => {
-      try {
-        setSubmittingError(null)
-
-        const { token } = await signUp.mutateAsync(values)
-
-        Cookie.set('token', token, { expires: 99999 })
-        await trpcUtils.invalidate()
-        navigate(routes.getAllIdeas())
-
-        formik.resetForm()
-
-        setSuccessMessageVisible(true)
-
-        setTimeout(() => {
-          setSuccessMessageVisible(false)
-        }, 3000)
-      } catch (error) {
-        if (error instanceof Error) {
-          setSubmittingError(error.message)
+    validationSchema: zSignUpTrpcInput
+      .extend({
+        passwordAgain: z.string().min(1),
+      })
+      .superRefine((val, ctx) => {
+        if (val.password !== val.passwordAgain) {
+          ctx.addIssue({
+            code: z.ZodIssueCode.custom,
+            message: 'Password must be the same',
+            path: ['passwordAgain'],
+          })
         }
-      }
+      }),
+    onSubmit: async (values) => {
+      const { token } = await signUp.mutateAsync(values)
+
+      Cookie.set('token', token, { expires: 99999 })
+      await trpcUtils.invalidate()
+      navigate(routes.getAllIdeas())
     },
+    showValidationAlert: true,
+    successMessage: 'Thanks for sign up!',
   })
 
   return (
@@ -76,11 +55,9 @@ export function SignUpPage() {
           <CustomInput label="Password" name="password" type="password" formik={formik} />
           <CustomInput label="Password" name="passwordAgain" type="password" formik={formik} />
 
-          {!formik.isValid && !!formik.submitCount && <CustomAlert color="red">Some fields are invalid</CustomAlert>}
-          {submittingError && <CustomAlert color="red">{submittingError}</CustomAlert>}
-          {successMessageVisible && <CustomAlert color="green">Thanks for sign up!</CustomAlert>}
+          <CustomAlert {...alertProps} />
 
-          <CustomButton loading={formik.isSubmitting}>Sign Up!</CustomButton>
+          <CustomButton {...buttonProps}>Sign Up!</CustomButton>
         </FormItems>
       </form>
     </Segment>

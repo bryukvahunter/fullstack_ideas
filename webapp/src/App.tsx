@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { TrpcProvider } from './lib/trpc-provider'
 import { AllIdeasPage } from './pages/all-ideas-page'
+import { EditIdeaPage } from './pages/edit-idea-page'
 import { NewIdeaPage } from './pages/new-idea-page'
 import { SignInPage } from './pages/sign-in'
 import { SignOutPage } from './pages/sign-out'
@@ -21,6 +22,7 @@ export function App() {
             <Route path={routes.getAllIdeas()} element={<AllIdeasPage />} />
             <Route path={routes.getViewIdea(viewIdeaRouteParams)} element={<ViewIdeaPage />} />
             <Route path={routes.getNewIdea()} element={<NewIdeaPage />} />
+            <Route path={routes.getEditIdea(viewIdeaRouteParams)} element={<EditIdeaPage />} />
             <Route path={routes.getSignUp()} element={<SignUpPage />} />
             <Route path={routes.getSignIn()} element={<SignInPage />} />
           </Route>

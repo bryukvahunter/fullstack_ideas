@@ -1,21 +1,21 @@
 import { getRouteParams } from './utils'
 
-export const routes = {
-  getAllIdeas: () => '/',
-  getViewIdea: ({ ideaNick }: { ideaNick: string }) => `/ideas/${ideaNick}`,
-  getNewIdea: () => '/ideas/new',
-  getSignUp: () => '/sign-up',
-  getSignIn: () => '/sign-in',
-  getSignOut: () => '/sign-out',
-}
-
 export const ROUTE_NAME = {
   IDEA_NICK: 'ideaNick',
 } as const
 
+export const routes = {
+  getAllIdeas: () => '/',
+  getViewIdea: ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNick}`,
+  getNewIdea: () => '/ideas/new',
+  getSignUp: () => '/sign-up',
+  getSignIn: () => '/sign-in',
+  getSignOut: () => '/sign-out',
+  getEditIdea: ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNick}/edit`,
+}
+
 export const viewIdeaRouteParams = getRouteParams({
   ideaNick: `:${ROUTE_NAME.IDEA_NICK}`,
-  xxx: '123',
 })
 
 export type ViewIdeaRouteParams = typeof viewIdeaRouteParams
