@@ -1,6 +1,7 @@
 import format from 'date-fns/format'
 import { useParams } from 'react-router-dom'
 import styles from './index.module.scss'
+import { useMe } from '@/lib/context/me'
 import { trpc } from '@/lib/create-trpc'
 import { LinkButton } from '@/shared/components/link-button'
 import { routes, type ViewIdeaRouteParams } from '@/shared/routes'
@@ -11,9 +12,9 @@ export function ViewIdeaPage() {
 
   const getIdeaResult = trpc.getIdea.useQuery({ ideaNick })
 
-  const getMeResult = trpc.getMe.useQuery()
+  const getMeResult = useMe()
 
-  if (getIdeaResult.isLoading || getIdeaResult.isFetching || getMeResult.isLoading || getMeResult.isFetching) {
+  if (getIdeaResult.isLoading || getIdeaResult.isFetching) {
     return <span>...Loading</span>
   }
 
@@ -21,16 +22,11 @@ export function ViewIdeaPage() {
     return <span>Error: {getIdeaResult.error.message}</span>
   }
 
-  if (getMeResult.isError) {
-    return <span>Error: {getMeResult.error.message}</span>
-  }
-
   if (!getIdeaResult.data.idea) {
     return <span>Idea not found</span>
   }
 
   const idea = getIdeaResult.data.idea
-  const me = getMeResult.data.me
 
   return (
     <Segment title={idea.name} description={idea.description}>
@@ -40,7 +36,7 @@ export function ViewIdeaPage() {
 
       <div className={styles.text} dangerouslySetInnerHTML={{ __html: idea.text }} />
 
-      {me?.id === idea.authorId && (
+      {getMeResult?.id === idea.authorId && (
         <div className={styles.editButton}>
           <LinkButton to={routes.getEditIdea({ ideaNick: idea.nick })}>Edit Idea</LinkButton>
         </div>

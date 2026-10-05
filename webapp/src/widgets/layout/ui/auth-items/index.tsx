@@ -1,18 +1,15 @@
 import { MenuItem } from '../menu-item'
-import { trpc } from '@/lib/create-trpc'
+import { useMe } from '@/lib/context/me'
 import { routes } from '@/shared/routes'
 
 export function AuthItems() {
-  const { data, isLoading } = trpc.getMe.useQuery()
+  const me = useMe()
 
-  if (isLoading) {
-    return null
-  }
-  if (data?.me) {
+  if (me) {
     return (
       <>
         <MenuItem name="Add Idea" to={routes.getNewIdea()} />
-        <MenuItem name={`Log Out (${data.me.nick})`} to={routes.getSignOut()} />
+        <MenuItem name={`Log Out (${me.nick})`} to={routes.getSignOut()} />
       </>
     )
   } else {

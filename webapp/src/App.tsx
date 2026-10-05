@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { AppContextProvider } from './lib/context/me'
 import { TrpcProvider } from './lib/trpc-provider'
 import { AllIdeasPage } from './pages/all-ideas-page'
 import { EditIdeaPage } from './pages/edit-idea-page'
@@ -14,20 +15,22 @@ import './styles/global.scss'
 export function App() {
   return (
     <TrpcProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path={routes.getSignOut()} element={<SignOutPage />} />
+      <AppContextProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path={routes.getSignOut()} element={<SignOutPage />} />
 
-          <Route element={<Layout />}>
-            <Route path={routes.getAllIdeas()} element={<AllIdeasPage />} />
-            <Route path={routes.getViewIdea(viewIdeaRouteParams)} element={<ViewIdeaPage />} />
-            <Route path={routes.getNewIdea()} element={<NewIdeaPage />} />
-            <Route path={routes.getEditIdea(viewIdeaRouteParams)} element={<EditIdeaPage />} />
-            <Route path={routes.getSignUp()} element={<SignUpPage />} />
-            <Route path={routes.getSignIn()} element={<SignInPage />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
+            <Route element={<Layout />}>
+              <Route path={routes.getAllIdeas()} element={<AllIdeasPage />} />
+              <Route path={routes.getViewIdea(viewIdeaRouteParams)} element={<ViewIdeaPage />} />
+              <Route path={routes.getNewIdea()} element={<NewIdeaPage />} />
+              <Route path={routes.getEditIdea(viewIdeaRouteParams)} element={<EditIdeaPage />} />
+              <Route path={routes.getSignUp()} element={<SignUpPage />} />
+              <Route path={routes.getSignIn()} element={<SignInPage />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AppContextProvider>
     </TrpcProvider>
   )
 }
