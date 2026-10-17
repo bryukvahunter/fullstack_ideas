@@ -1,19 +1,18 @@
-import { zSignUpTrpcInput } from '@fullstack/backend/src/router/sign-up/input'
+import { zSignUpTrpcInput } from '@fullstack/backend/src/router/auth/sign-up/input'
 import Cookie from 'js-cookie'
-import { useNavigate } from 'react-router-dom'
 import z from 'zod'
 import { trpc } from '@/lib/create-trpc'
 import { useForm } from '@/lib/hooks/form'
+import { withPageWrapper } from '@/lib/wrappers/page-wrapper'
 import { CustomAlert } from '@/shared/components/alert'
 import { CustomButton } from '@/shared/components/button'
 import { FormItems } from '@/shared/components/form-items'
 import { CustomInput } from '@/shared/components/input/input'
-import { routes } from '@/shared/routes'
 import { Segment } from '@/widgets/segment'
 
-export function SignUpPage() {
-  const navigate = useNavigate()
-
+export const SignUpPage = withPageWrapper({
+  redirectAuthorized: true,
+})(() => {
   const trpcUtils = trpc.useUtils()
 
   const signUp = trpc.signUp.useMutation()
@@ -41,7 +40,6 @@ export function SignUpPage() {
 
       Cookie.set('token', token, { expires: 99999 })
       await trpcUtils.invalidate()
-      navigate(routes.getAllIdeas())
     },
     showValidationAlert: true,
     successMessage: 'Thanks for sign up!',
@@ -62,4 +60,4 @@ export function SignUpPage() {
       </form>
     </Segment>
   )
-}
+})

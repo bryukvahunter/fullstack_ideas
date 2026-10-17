@@ -1,6 +1,7 @@
-import { zCreateIdeaTrpcInput } from '@fullstack/backend/src/router/create-idea/input'
+import { zCreateIdeaTrpcInput } from '@fullstack/backend/src/router/ideas/create-idea/input'
 import { trpc } from '@/lib/create-trpc'
 import { useForm } from '@/lib/hooks/form'
+import { withPageWrapper } from '@/lib/wrappers/page-wrapper'
 import { CustomAlert } from '@/shared/components/alert'
 import { CustomButton } from '@/shared/components/button'
 import { FormItems } from '@/shared/components/form-items'
@@ -8,7 +9,9 @@ import { CustomInput } from '@/shared/components/input/input'
 import { CustomTextarea } from '@/shared/components/textarea/textarea'
 import { Segment } from '@/widgets/segment'
 
-export function NewIdeaPage() {
+export const NewIdeaPage = withPageWrapper({
+  authorizedOnly: true,
+})(() => {
   const createIdea = trpc.createIdea.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
@@ -44,4 +47,4 @@ export function NewIdeaPage() {
       </form>
     </Segment>
   )
-}
+})

@@ -1,6 +1,6 @@
-import { trpc } from '../../lib'
-import { getPasswordHash } from '../../utils/get-password-hash'
-import { signJWT } from '../../utils/sign-jwt'
+import { trpc } from '../../../lib'
+import { getPasswordHash } from '../../../utils/get-password-hash'
+import { signJWT } from '../../../utils/sign-jwt'
 import { zSignUpTrpcInput } from './input'
 
 export const signUpTrpcRoute = trpc.procedure.input(zSignUpTrpcInput).mutation(async ({ ctx, input }) => {
