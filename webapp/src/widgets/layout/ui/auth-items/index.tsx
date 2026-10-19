@@ -9,6 +9,7 @@ export function AuthItems() {
     return (
       <>
         <MenuItem name="Add Idea" to={routes.getNewIdea()} />
+        <MenuItem name="Edit profile" to={routes.getEditProfile()} />
         <MenuItem name={`Log Out (${me.nick})`} to={routes.getSignOut()} />
       </>
     )

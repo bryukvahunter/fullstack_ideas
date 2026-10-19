@@ -12,6 +12,7 @@ export const routes = {
   getSignIn: () => '/sign-in',
   getSignOut: () => '/sign-out',
   getEditIdea: ({ ideaNick }: ViewIdeaRouteParams) => `/ideas/${ideaNick}/edit`,
+  getEditProfile: () => '/edit-profile',
 }
 
 export const viewIdeaRouteParams = getRouteParams({

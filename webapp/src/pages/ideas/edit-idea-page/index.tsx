@@ -27,7 +27,7 @@ export const EditIdeaPage = withPageWrapper({
 })(({ idea }) => {
   const navigate = useNavigate()
 
-  const updateIdea = trpc.updateIdeaTrpcRoute.useMutation()
+  const updateIdea = trpc.updateIdea.useMutation()
 
   const { formik, alertProps, buttonProps } = useForm({
     initialValues: pick(idea, ['name', 'nick', 'description', 'text']),

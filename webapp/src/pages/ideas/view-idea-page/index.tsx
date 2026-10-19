@@ -21,7 +21,10 @@ export const ViewIdeaPage = withPageWrapper({
     <Segment title={idea.name} description={idea.description}>
       <div className={styles.createdAt}>Created AT: {format(new Date(idea.createdAt), 'yyyy-MM-dd')}</div>
 
-      <div className={styles.author}>Author: {idea.author.nick}</div>
+      <div className={styles.author}>
+        Author: {idea.author.nick}
+        {idea.author.name ? ` (${idea.author.name})` : ''}
+      </div>
 
       <div className={styles.text} dangerouslySetInnerHTML={{ __html: idea.text }} />
 
