@@ -11,7 +11,7 @@ type Props<TZodSchema extends z.ZodTypeAny> = {
   showValidationAlert?: boolean
   initialValues?: z.infer<TZodSchema>
   validationSchema?: TZodSchema
-  onSubmit: (values: z.infer<TZodSchema>, actions: FormikHelpers<z.infer<TZodSchema>>) => void | Promise<void>
+  onSubmit?: (values: z.infer<TZodSchema>, actions: FormikHelpers<z.infer<TZodSchema>>) => void | Promise<void>
 }
 
 export function useForm<TZodSchema extends z.ZodTypeAny>({
@@ -29,6 +29,10 @@ export function useForm<TZodSchema extends z.ZodTypeAny>({
     initialValues,
     ...(validationSchema && { validate: withZodSchema(validationSchema) }),
     onSubmit: async (values, actions) => {
+      if (!onSubmit) {
+        return
+      }
+
       try {
         setSubmittingError(null)
         await onSubmit(values, actions)

@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
 
 datasource db {
@@ -8,21 +9,35 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  nick      String   @unique
-  name      String   @default("")
+  id        String     @id @default(uuid())
+  nick      String     @unique
+  name      String     @default("")
   password  String
-  createdAt DateTime @default(now()) @db.Timestamptz(3)
+  createdAt DateTime   @default(now()) @db.Timestamptz(3)
   ideas     Idea[]
+  ideaLikes IdeaLike[]
 }
 
 model Idea {
-  id          String   @id @default(uuid())
-  nick        String   @unique
-  name        String
-  description String
-  text        String
-  createdAt   DateTime @default(now()) @db.Timestamptz(3)
-  authorId    String
-  author      User     @relation(fields: [authorId], references: [id])
+  id           String     @id @default(uuid())
+  nick         String     @unique
+  serialNumber Int        @unique @default(autoincrement())
+  name         String
+  description  String
+  text         String
+  createdAt    DateTime   @default(now()) @db.Timestamptz(3)
+  authorId     String
+  author       User       @relation(fields: [authorId], references: [id])
+  ideaLikes    IdeaLike[]
+}
+
+model IdeaLike {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  idea      Idea     @relation(fields: [ideaId], references: [id])
+  ideaId    String
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+
+  @@unique([ideaId, userId])
 }

@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppContext, type AppContext } from '../context/me'
 import { NotFoundPage } from '@/pages/other/not-found-page'
+import { Loader } from '@/shared/components/loader'
 import { routes } from '@/shared/routes'
 
 class CheckExistsError extends Error {}
@@ -22,6 +23,8 @@ function checkAccessFn<T>(value: T, message?: string): void {
   }
 }
 
+class GetAuthrizedMeError extends Error {}
+
 type Props = Record<string, any>
 type QueryResult = UseTRPCQueryResult<any, any>
 type QuerySuccessResult<TQueryResult extends QueryResult> = UseTRPCQuerySuccessResult<
@@ -37,6 +40,7 @@ type HelperProps<TQueryResult extends QueryResult | undefined> = {
 type SetPropsProps<TQueryResult extends QueryResult | undefined> = HelperProps<TQueryResult> & {
   checkExists: typeof checkExistsFn
   checkAccess: typeof checkAccessFn
+  getAuthorizedMe: (message?: string) => NonNullable<AppContext['me']>
 }
 
 type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | undefined> = {
@@ -50,6 +54,7 @@ type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | u
   checkExists?: (helperProps: HelperProps<TQueryResult>) => boolean
   checkExistsTitle?: string
   checkExistsMessage?: string
+  showLoaderOnFetching?: boolean
   useQuery?: () => TQueryResult
   setProps?: (setPropsProps: SetPropsProps<TQueryResult>) => TProps
   Page: React.FC<TProps>
@@ -58,7 +63,7 @@ type PageWrapperProps<TProps extends Props, TQueryResult extends QueryResult | u
 const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult | undefined = undefined>({
   authorizedOnly,
   authorizedOnlyTitle = 'Please, authorized',
-  authorizedOnlyMessage = 'This page is available only for authorizd users',
+  authorizedOnlyMessage = 'This page is available only for authorized users',
   redirectAuthorized,
   checkAccess,
   checkAccessTitle = 'Access dinied',
@@ -69,6 +74,7 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
   useQuery,
   setProps,
   Page,
+  showLoaderOnFetching = true,
 }: PageWrapperProps<TProps, TQueryResult>) => {
   const navigate = useNavigate()
   const context = useAppContext()
@@ -82,8 +88,8 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
     }
   }, [redirectNeeded, navigate])
 
-  if (queryResult?.isLoading || queryResult?.isFetching || redirectNeeded) {
-    return <p>...Loading</p>
+  if (queryResult?.isLoading || (showLoaderOnFetching && queryResult?.isFetching) || redirectNeeded) {
+    return <Loader type={'page'} />
   }
 
   if (queryResult?.error) {
@@ -110,8 +116,21 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
     }
   }
 
+  function getAuthorizedMe(message?: string) {
+    if (!context.me) {
+      throw new GetAuthrizedMeError(message)
+    }
+
+    return context.me
+  }
+
   try {
-    const props = setProps?.({ ...helperProps, checkExists: checkExistsFn, checkAccess: checkAccessFn }) as TProps
+    const props = setProps?.({
+      ...helperProps,
+      checkExists: checkExistsFn,
+      checkAccess: checkAccessFn,
+      getAuthorizedMe,
+    }) as TProps
     return <Page {...props} />
   } catch (error) {
     if (error instanceof CheckExistsError) {
@@ -120,6 +139,10 @@ const PageWrapper = <TProps extends Props = {}, TQueryResult extends QueryResult
 
     if (error instanceof CheckAccessError) {
       return <NotFoundPage title={checkAccessTitle} message={error.message || checkAccessMessage} />
+    }
+
+    if (error instanceof GetAuthrizedMeError) {
+      return <NotFoundPage title={authorizedOnlyTitle} message={error.message || authorizedOnlyMessage} />
     }
     throw error
   }

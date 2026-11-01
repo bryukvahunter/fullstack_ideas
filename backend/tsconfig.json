@@ -21,11 +21,10 @@
     "module": "commonjs",
     "target": "ES2021",
     "types": ["node"],
-    "lib": ["ES2021"],
+    "lib": ["ES2021", "ES2022"],
     "declaration": true,
     "declarationMap": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force"
   },

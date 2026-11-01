@@ -1,6 +1,7 @@
 import type { TrpcRouterOutput } from '@fullstack/backend/src/router'
 import { createContext, useContext } from 'react'
 import { trpc } from '../create-trpc'
+import { Loader } from '@/shared/components/loader'
 
 export type AppContext = {
   me: TrpcRouterOutput['getMe']['me']
@@ -14,7 +15,7 @@ export function AppContextProvider({ children }: { children: React.ReactNode }) 
   const { data, isLoading, isError, error } = trpc.getMe.useQuery()
 
   if (isLoading) {
-    return <p>...Loading</p>
+    return <Loader type={'page'} />
   }
 
   if (isError) {

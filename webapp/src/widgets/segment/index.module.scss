@@ -1,5 +1,5 @@
-@import "../../styles/mixin";
-@import "../../styles/vars";
+@import '../../styles/mixin';
+@import '../../styles/vars';
 
 .segment {
   h1.title {
@@ -17,5 +17,9 @@
 
   .content {
     margin-top: 12px;
+  }
+
+  & + .segment {
+    margin-top: 30px;
   }
 }

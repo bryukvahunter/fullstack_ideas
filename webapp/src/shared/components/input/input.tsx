@@ -13,7 +13,7 @@ export function CustomInput<T extends FormikValues>({
   label: string
   formik: FormikProps<T>
   type?: React.HTMLInputTypeAttribute | undefined
-  maxWidth?: number
+  maxWidth?: number | string
 }) {
   const value = formik.values[name]
   const error = formik.errors[name] as string | undefined
